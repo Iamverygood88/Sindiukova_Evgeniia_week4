@@ -1,18 +1,53 @@
 (() => {
 	console.log('fired');
 
-	//window.addEventListener("load", changeHeadline); 
+	//set up the puzzle and boards
+	//need a reference to each piec that we want to create
 
-	const theButton = document.querySelector("#buttonHolder img");
+	const thePieces = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
-	function changeHeadline() {
-		document.querySelector("h1").textContent = "Hello there!";
-		document.querySelector("p").textContent = "This is the subhead!";
+	// get a reference to the drag side
+	let piecesBoard = document.querySelector(".puzzle-pieces"); 
+	let puzzleBoard = document.querySelector(".puzzle-board");
+
+	//get a reference to the buttons at the bottom so we can change the puzzle
+	let puzzleSelectors = document.querySelectorAll("#buttonHolder img");
+
+	//functions go in the middle 
+	function createPuzzlePieces(pictureIndex) {
+		//generate images here -> need to make 4 (top left, right, bottom left, bottom right)
+		//debugger; 
+
+		//loop throuth the images refs and generate one for each
+		thePieces.forEach((piece, index) => {
+			let newPuzzlePiece = `<img id="piece${index}" class="puzzle-image" src="images/${piece + pictureIndex}.jpg" alt="puzzle piece">`;
+
+			piecesBoard.innerHTML += newPuzzlePiece;
+		});
 	}
 
-	theButton.addEventListener("click", changeHeadline); 
-	// set up the puzzle pieces and boards
-	//	
+
+
+
+function resetPuzzlePieces () {
+	//change the current puzzle, regenerate the pieces
+	//debugger;
+	//clean out the puzzle pieces div
+	piecesBoard.innerHTML = "";
 	
+
+	createPuzzlePieces(this.dataset.puzzleref);
+}
+
+puzzleSelectors.forEach(button => button.addEventListener("click", resetPuzzlePieces));
+
+
+//call this function to set up / generate the pieces on load
+createPuzzlePieces(0);
+
+
 })();
+
+
+
 
